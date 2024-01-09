@@ -1,5 +1,5 @@
 ---
-title: "Untitled"
+title: "Personality and popularity (Very WIP)"
 output: 
   flexdashboard::flex_dashboard:
     orientation: columns
@@ -8,29 +8,62 @@ output:
 
 ```{r setup, include=FALSE}
 library(flexdashboard)
+library(fmsb)
 ```
 
-Column {data-width=650}
+Column {data-width=500}
 -----------------------------------------------------------------------
 
-### Chart A
-
+### Correlation between the five personality types and the popularity of music
 ```{r}
+# Sample data VERY POOR CODE, CHANGE SOON
+#Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism
+exam_scores <- data.frame(
+    row.names = c("Student.1", "Student.2", "Student.3"),
+      Openness = c(7.9, 3.9, 9.4),
+      Conscientiousness = c(10, 20, 0),
+        Extraversion = c(3.7, 11.5, 2.5),
+        Agreeableness = c(8.7, 20, 4),
+      Neuroticism = c(7.9, 7.2, 12.4)
+)
 
+max_min <- data.frame(
+  Openness = c(20, 0), Conscientiousness = c(20, 0), Extraversion = c(20, 0),
+  Agreeableness = c(20, 0), Neuroticism = c(20, 0)
+)
+rownames(max_min) <- c("Max", "Min")
+
+# Bind the variable ranges to the data
+df <- rbind(max_min, exam_scores)
+
+student1_data <- df[c("Max", "Min", "Student.1"), ]
+radarchart(student1_data)
+
+# Note: seg is the number of segments in the radar chart
 ```
 
-Column {data-width=350}
+
+### chart explanation
+
+Column {data-width=500}
 -----------------------------------------------------------------------
 
-### Chart B
+### Introduction
+The Intersection of personality & music listening is one that has been heavily studied by several researchers with focus being placed on the relationship between preferences for musical attributes and personality (Greenberg, Kosinski et al. 2016) or music listening behavior on Spotify and personality (Anderson, Gil, Greenberg, 2020) for example. 
 
-```{r}
+This fascination with musics inherent interplay with personality is what lead us to our research question: Is personality a significant predictor of whether someone listens to mainstream or non mainstream music? In our case personality being measured using a shortened version of the big five inventory - the TiPi test. 
 
-```
+We decided that this instrument for personality measurement was best suited for our study due to its accessibility (as people are more likely to finish a shorter questionnaire) and efficiency. Additionally the metrics of Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism are ones that have cross-cultural applicability, standardized scoring and interpretation, and are widely accepted comprehensive frameworks. 
 
-### Chart C
+Additionally popularity was chosen as the track feature we will be measuring personality against, as it sheds light on inclinations towards music that align with prevailing trends or deviate to more niche choices thus adding our own particular angle on the wider lens of personality and music taste.
 
-```{r}
+We will be using Spotify, specifically the Spotify “On Repeat” Playlist data of participants in order to analyze their music listening data as this playlist represents tracks that are most up to date with the participants listening repertoire. 
 
-```
+Our study hopes to ultimately culminate in a deeper understanding of how individual psychological characteristics influence music preferences and contribute to the ever evolving conversation regarding the relationship between music and personality.
 
+### Motivation
+Our investigation into the link between personality and choice of mainstream music transcends mere curiosity as its is a question that subtly influences us on a daily basis.
+
+Prevailing stereotypes dictate that the average mainstream music enjoyer embody certain characteristics such as extraversion whereas those who are entrenched in niche musical subcultures are perceived differently (more open for example), leading us to make assumptions regarding those around us. While this is a common bias, it is also one that we see be disproven time and time again. Why then do these stereotypes live on? Could it be that there is a validity to linking traits such as extreme extraversion with affinity towards popular music or are there other qualities such as agreeableness that predict this affinity better?
+
+This plays an even bigger role when we take into consideration the social aspect of music and how it is a tool to connect people. Regardless of where one falls on the OCEAN (Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism) scale, your preferences may align with someone who seemingly falls on the opposite side. Thus making the closer examination of the intersection between personality and popularity even more intriguing.
