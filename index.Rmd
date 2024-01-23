@@ -97,34 +97,6 @@ Description
 --------------------------------------
 ### description of the charts
 
-Extraversion {data-navmenu="Results"}
-==========================================
-EXTRAVERSION
-
-Charts
--------------------------------
-### Correlation chart
-
-### Distribution
-
-Description
---------------------------------------
-### description of the charts
-
-Neuroticism {data-navmenu="Results"}
-==========================================
-NEUROTICISM
-
-Charts
--------------------------------
-### Correlation chart
-
-### Distribution
-
-Description
---------------------------------------
-### description of the charts
-
 Conscientiousness {data-navmenu="Results"}
 ==========================================
 CONSCIENTIOUSNESS
@@ -139,9 +111,37 @@ Description
 --------------------------------------
 ### description of the charts
 
+Extraversion {data-navmenu="Results"}
+==========================================
+EXTRAVERSION
+
+Charts
+-------------------------------
+### Correlation chart
+
+### Distribution
+
+Description
+--------------------------------------
+### description of the charts
+
 Agreeableness {data-navmenu="Results"}
 ==========================================
 AGREEABLENESS
+
+Charts
+-------------------------------
+### Correlation chart
+
+### Distribution
+
+Description
+--------------------------------------
+### description of the charts
+
+Neuroticism {data-navmenu="Results"}
+==========================================
+NEUROTICISM
 
 Charts
 -------------------------------
