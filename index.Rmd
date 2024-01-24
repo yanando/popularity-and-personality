@@ -20,15 +20,41 @@ data <- read.csv("data_cleaned_with_average.csv", stringsAsFactors = FALSE)
 
 Abstract
 ===================================================================
-Sidebar {.sidebar}
+Sidebar {data-width=1000}
 -------------------------------------
+### Number of participants
+```{r}
 
+valueBox(67, 
+         caption = 'Number of participants', 
+         icon = 'fa-user')
+```
+### Questions in our survey
+```{r}
 
+valueBox(11, 
+         caption = 'Questions in our survey', 
+         icon = 'fa-question')
+```
+### Traits studied
+```{r}
+
+valueBox(5, 
+         caption = 'Traits studied', 
+         icon = 'fa-gear')
+```
+### Average popularity score
+```{r}
+
+valueBox(62.7, 
+         caption = 'Average popularity score', 
+         icon = 'fa-fire')
+```
 Column {data-width=500}
 -----------------------------------------------------------------------
 
 ### Correlation between the five personality types and the popularity of music
-```{r main_graph}
+```{r spider_graphs}
 #print(data)
 # data prep
 cc_average_extraversion <- cor(data$filtered_avg_popularity, data$extraversion_score)
@@ -43,9 +69,10 @@ data_vis <- c("Extraversion" = cc_average_extraversion, "Conscientiousness" = cc
 data_visualisation <- data.frame(t(data_vis))
 
 final_data_vis <- data.frame(rbind(rep(1,5), rep(0,5), data_visualisation))
-radarchart(final_data_vis, pcol = c("#4682B4"), pfcol = c("#9FE2BF"))
+# we're adding a picture of this visualization because, for some reason, the chart comes out really tiny
+#radarchart(final_data_vis, pcol = c("#4682B4"), pfcol = c("#9FE2BF"))
 ```
-
+<img src="assets/spider_chart.png"/>
 
 ### Heatmap chart
 
@@ -57,7 +84,7 @@ Our investigation into the link between personality and choice of mainstream mus
 
 Prevailing stereotypes dictate that the average mainstream music enjoyer embody certain characteristics such as extraversion whereas those who are entrenched in niche musical subcultures are perceived differently (more open for example), leading us to make assumptions regarding those around us. While this is a common bias, it is also one that we see be disproven time and time again. Why then do these stereotypes live on? Could it be that there is a validity to linking traits such as extreme extraversion with affinity towards popular music or are there other qualities such as agreeableness that predict this affinity better?
 
-This plays an even bigger role when we take into consideration the social aspect of music and how it is a tool to connect people. Regardless of where one falls on the OCEAN (Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism) scale, your preferences may align with someone who seemingly falls on the opposite side. Thus making the closer examination of the intersection between personality and popularity even more intriguing.
+This plays an even bigger role when we take into consideration the social aspect of music and how it is a tool to connect people. Regardless of where one falls on the OCEAE (Openness, Conscientiousness, Extraversion, Agreeableness, and Emotional stability) scale, your preferences may align with someone who seemingly falls on the opposite side. Thus making the closer examination of the intersection between personality and popularity even more intriguing.
 
 ### Chart explanation / our findings
 
@@ -76,7 +103,7 @@ The Intersection of personality & music listening is one that has been heavily s
 
 This fascination with music's inherent interplay with personality is what lead us to our research question: Is personality a significant predictor of whether someone listens to mainstream or non mainstream music? In our case personality being measured using a shortened version of the big five inventory - the TiPi test. 
 
-We decided that this instrument for personality measurement was best suited for our study due to its accessibility (as people are more likely to finish a shorter questionnaire) and efficiency. Additionally the metrics of Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism are ones that have cross-cultural applicability, standardized scoring and interpretation, and are widely accepted comprehensive frameworks. 
+We decided that this instrument for personality measurement was best suited for our study due to its accessibility (as people are more likely to finish a shorter questionnaire) and efficiency. Additionally the metrics of Openness, Conscientiousness, Extraversion, Agreeableness, and Emotional Stability are ones that have cross-cultural applicability, standardized scoring and interpretation, and are widely accepted comprehensive frameworks. 
 
 Additionally popularity was chosen as the track feature we will be measuring personality against, as it sheds light on inclinations towards music that align with prevailing trends or deviate to more niche choices thus adding our own particular angle on the wider lens of personality and music taste.
 
@@ -120,7 +147,7 @@ ggplotly(p)
 
 Description
 --------------------------------------
-### description of the charts
+### Chart Description
 
 Conscientiousness {data-navmenu="Results"}
 ==========================================
@@ -151,7 +178,7 @@ ggplotly(p)
 
 Description
 --------------------------------------
-### description of the charts
+### Chart Description
 
 Extraversion {data-navmenu="Results"}
 ==========================================
@@ -182,7 +209,7 @@ ggplotly(p)
 
 Description
 --------------------------------------
-### description of the charts
+### Chart Description
 
 Agreeableness {data-navmenu="Results"}
 ==========================================
@@ -213,11 +240,11 @@ ggplotly(p)
 
 Description
 --------------------------------------
-### description of the charts
+### Chart Description
 
-Neuroticism {data-navmenu="Results"}
+Emotional Stability {data-navmenu="Results"}
 ==========================================
-NEUROTICISM
+EMOTIONAL STABILITY
 
 Charts
 -------------------------------
@@ -243,7 +270,7 @@ ggplotly(p)
 ```
 Description
 --------------------------------------
-### description of the charts
+### Chart Description
 
 Evaluation/Reflection
 =======================================
@@ -254,11 +281,25 @@ Background {data-orientation=columns}
 
 Article reviews {.tabset .tabset-fade data-width=600}
 -------------------------------------
-### Music Recommender systems  
+### Music Recommender systems and popularity
 Music recommender systems are an integral part of modern-day music listening. They are adopted by streaming services such as Spotify and Apple Music and are part of their core feature set. These recommender systems, however, are not perfect. One of the issues described in “Support the underground: characteristics of beyond-mainstream music listeners” by Kowald et al. (2021) is the popularity bias these recommender systems have: popular songs are over-represented in recommendation lists. Furthermore, a study by Tintarev et al. (2013) found that openness to new music and the diversity of music within a group influences recommendation quality. The authors set to find out what the characteristics of beyond-mainstream music tracks and music listeners are, and how these characteristics correlate with openness and diversity patterns as well as with recommendation quality.
 
 The authors of the article aimed to identify the characteristics of beyond-mainstream music tracks and listeners and how these characteristics influence recommendation quality in addition to openness and diversity patterns. The authors observed that beyond-mainstream music listeners receive worse recommendations, except for a certain subgroup with a high openness value. This subgroup received even better recommendations than mainstream music listeners.
 
+### Market concentration
+Over the last couple of decades, music consumption has shifted from purchasing individual records and listening to the radio to a single digital application that fits into your pocket. This era of digitalization is dominated by a fistful of firms and platforms, that manage to concentrate the market and therefore obtain massive potential leverage. Luis Aguiar and Joel Waldfogel (2021) aim to study the effect of such influence by digital companies by using the case of Spotify in their article Platforms, Power, and Promotion: Evidence from Spotify Playlists. The authors use Spotify as an example as it, combined with Apple Music, represents almost 55% of all global music streaming subscriptions. With such market concentration, the potential for antitrust problems arises. Therefore, the authors wish to quantify Spotify’s market power and evaluate if further scrutiny is needed when dealing with these platforms. They particularly focus on Spotify’s playlists, as the company manages 84.3% of the top 1000 playlists on the platform. Given that Spotify shares revenue with creators, list inclusion could present an avenue for favoritism. The fact that Spotify also cuts licensing deals with independent artists and directly competes with labels that rely on the platform presents a conflict of interest and exacerbates the potential for shady business practices. Therefore, an analysis of Spotify’s market power is conducted by comparing periods of song inclusion and removal from their playlists and the changes in daily listening numbers that ensue. They do this using both curated and algorithmic playlists and discontinuous daily listening numbers that Spotify publishes. Curated playlists are handpicked by experts at Spotify, while algorithmic playlists follow a simple rule for inclusion.
+
+First, they studied curated playlists like Top Hits Daily and RapCaviar. Using regression discontinuity, they figured out that a curated inclusion on the Today’s Top Hits playlist on average raises worldwide daily streams by approximately 260,000, which according to their estimates corresponds to an approximate total increase of 20 million with a $77,000 payout. A comparable effect in the opposite direction was also noticed when a song was removed from the playlist, as daily streams dropped.
+
+A similar effect appeared with algorithmic playlists. The Global Top 50 playlist simply includes the 50 most streamed songs during the previous day. Using data for the top 200 most streamed songs, the authors constructed a fictitious 51st song and compared the cutoff. The songs decrease in daily streams the further you go down the playlist. They spotted a significant increase in the percentage reduction of daily streams per song ranking at rank 51. This change then disappears from 51 onwards, which signifies an important effect of inclusion on playlists, even if it is simply algorithmic.
+
+The authors also studied a special playlist called New Music Friday, as songs on there are released just days before their inclusion. Therefore, consistent pre-inclusion listening data is not available. They figured out that playlist rank is important, as songs in the first spot have an 85% chance of appearing on chart playlists. That percentage drops drastically until it is effectively irrelevant around rank 11-15. Using data from this playlist, they also discovered that effects from song inclusion in playlists persist for circa 1000 days.
+
+In the end, song inclusion in playlists has immense ramifications on streaming numbers and payouts. Spotify’s dominant position in the playlist selection therefore presents a problem for other market participants, which needs to be more heavily analyzed by antitrust authorities
+
 References {data-width=400}
 ----------------------------------------------
 ### References
+
+### Data analysis for those who are interested {data-height=300}
+<img src="assets/data_analysis.png">
