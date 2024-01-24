@@ -12,17 +12,16 @@ output:
 ```{r setup, include=FALSE}
 library(flexdashboard)
 library(fmsb)
+library(ggplot2)
+library(plotly)
+
+data <- read.csv("data_cleaned_with_average.csv", stringsAsFactors = FALSE)
 ```
 
 Abstract
 ===================================================================
 Sidebar {.sidebar}
 -------------------------------------
-Our investigation into the link between personality and choice of mainstream music transcends mere curiosity as its is a question that subtly influences us on a daily basis.
-
-Prevailing stereotypes dictate that the average mainstream music enjoyer embody certain characteristics such as extraversion whereas those who are entrenched in niche musical subcultures are perceived differently (more open for example), leading us to make assumptions regarding those around us. While this is a common bias, it is also one that we see be disproven time and time again. Why then do these stereotypes live on? Could it be that there is a validity to linking traits such as extreme extraversion with affinity towards popular music or are there other qualities such as agreeableness that predict this affinity better?
-
-This plays an even bigger role when we take into consideration the social aspect of music and how it is a tool to connect people. Regardless of where one falls on the OCEAN (Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism) scale, your preferences may align with someone who seemingly falls on the opposite side. Thus making the closer examination of the intersection between personality and popularity even more intriguing.
 
 
 Column {data-width=500}
@@ -30,30 +29,21 @@ Column {data-width=500}
 
 ### Correlation between the five personality types and the popularity of music
 ```{r main_graph}
-# Sample data VERY POOR CODE, CHANGE SOON
-#Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism
-exam_scores <- data.frame(
-    row.names = c("Student.1", "Student.2", "Student.3"), # idk why this is here but it needs to be otherwise it wont work
-      Openness = c(7.9, 3.9, 9.4),
-      Conscientiousness = c(10, 20, 0),
-        Extraversion = c(3.7, 11.5, 2.5),
-        Agreeableness = c(8.7, 20, 4),
-      Neuroticism = c(7.9, 7.2, 12.4)
-)
+#print(data)
+# data prep
+cc_average_extraversion <- cor(data$filtered_avg_popularity, data$extraversion_score)
+cc_average_agreeableness <- cor(data$filtered_avg_popularity, data$agreeableness_score)
+cc_average_conscientiousness <- cor(data$filtered_avg_popularity, data$conscientiousness_score)
+cc_average_emotional_stability <- cor(data$filtered_avg_popularity, data$emotionalStability_score)
+cc_average_openness <- abs(cor(data$filtered_avg_popularity, data$opennessToExperiences_score))
 
-max_min <- data.frame(
-  Openness = c(20, 0), Conscientiousness = c(20, 0), Extraversion = c(20, 0),
-  Agreeableness = c(20, 0), Neuroticism = c(20, 0)
-)
-rownames(max_min) <- c("Max", "Min")
+# data vis
+data_vis <- c("Extraversion" = cc_average_extraversion, "Conscientiousness" = cc_average_conscientiousness, "Emotional Stability" = cc_average_emotional_stability, "Agreeableness" = cc_average_agreeableness, "Openness" = cc_average_openness)
 
-# Bind the variable ranges to the data
-df <- rbind(max_min, exam_scores)
+data_visualisation <- data.frame(t(data_vis))
 
-student1_data <- df[c("Max", "Min", "Student.1"), ]
-radarchart(student1_data)
-
-# Note: seg is the number of segments in the radar chart
+final_data_vis <- data.frame(rbind(rep(1,5), rep(0,5), data_visualisation))
+radarchart(final_data_vis, pcol = c("#4682B4"), pfcol = c("#9FE2BF"))
 ```
 
 
@@ -62,8 +52,14 @@ radarchart(student1_data)
 Column {data-width=500}
 -----------------------------------------------------------------------
 
+### Introduction
+Our investigation into the link between personality and choice of mainstream music transcends mere curiosity as its is a question that subtly influences us on a daily basis.
+
+Prevailing stereotypes dictate that the average mainstream music enjoyer embody certain characteristics such as extraversion whereas those who are entrenched in niche musical subcultures are perceived differently (more open for example), leading us to make assumptions regarding those around us. While this is a common bias, it is also one that we see be disproven time and time again. Why then do these stereotypes live on? Could it be that there is a validity to linking traits such as extreme extraversion with affinity towards popular music or are there other qualities such as agreeableness that predict this affinity better?
+
+This plays an even bigger role when we take into consideration the social aspect of music and how it is a tool to connect people. Regardless of where one falls on the OCEAN (Openness, Conscientiousness, Extraversion, Agreeableness, and Neuroticism) scale, your preferences may align with someone who seemingly falls on the opposite side. Thus making the closer examination of the intersection between personality and popularity even more intriguing.
+
 ### Chart explanation / our findings
-blabla
 
 Methodology  {data-orientation=columns}
 ===================================
@@ -102,8 +98,25 @@ OPENNESS
 Charts
 -------------------------------
 ### Correlation chart
+```{r}
+p <- ggplot(data, aes(x = opennessToExperiences_score, y = filtered_avg_popularity)) +
+  geom_point() +  
+  geom_smooth(method = "lm", color="#EC9595", se = TRUE) +  
+  labs(x = "Openness Score", y = "Filtered Average Popularity", 
+       title = "Scatterplot of Openness Score vs Filtered Average Popularity") +
+  theme_minimal()
+
+ggplotly(p)
+```
 
 ### Distribution
+```{r}
+p <- ggplot(data, aes(x = opennessToExperiences_score)) +
+   geom_density(fill = "#EC9595", alpha = 0.5) +
+   labs(title = "Density Plot of Openness To Experiences Score", x = "Openness To Experiences Score", y = "Density") + xlim(0,10) + ylim(0, 0.5) + theme_minimal()
+
+ggplotly(p)
+```
 
 Description
 --------------------------------------
@@ -116,8 +129,25 @@ CONSCIENTIOUSNESS
 Charts
 -------------------------------
 ### Correlation chart
+```{r}
+p <- ggplot(data, aes(x = conscientiousness_score, y = filtered_avg_popularity)) +
+  geom_point() +  
+  geom_smooth(method = "lm", color="#E3EBA7", se = TRUE) +  
+  labs(x = "Conscientiousness Score", y = "Filtered Average Popularity", 
+       title = "Scatterplot of Conscientiousness Score vs Filtered Average Popularity") +
+  theme_minimal()
+
+ggplotly(p)
+```
 
 ### Distribution
+```{r}
+p <- ggplot(data, aes(x = conscientiousness_score)) +
+    geom_density(fill = "#E3EBA7", alpha = 0.5) +
+    labs(title = "Density Plot of Conscientiousness Score", x = "Conscientiousness Score", y = "Density") + xlim(0,10) + ylim(0, 0.5)
+
+ggplotly(p)
+```
 
 Description
 --------------------------------------
@@ -130,8 +160,25 @@ EXTRAVERSION
 Charts
 -------------------------------
 ### Correlation chart
+```{r}
+p <- ggplot(data, aes(x = extraversion_score, y = filtered_avg_popularity)) +
+  geom_point() +  
+  geom_smooth(method = "lm", color="#008080", se = TRUE) +  
+  labs(x = "Extraversion Score", y = "Filtered Average Popularity", 
+       title = "Scatterplot of Extraversion Score vs Filtered Average Popularity") +
+  theme_minimal()
+
+ggplotly(p)
+```
 
 ### Distribution
+```{r}
+p <- ggplot(data, aes(x = extraversion_score)) +
+  geom_density(fill = "#008080", alpha = 0.5) +
+  labs(title = "Density Plot of Extraversion Score", x = "Extraversion Score", y = "Density") + xlim(0,10) + ylim(0, 0.5)
+
+ggplotly(p)
+```
 
 Description
 --------------------------------------
@@ -144,8 +191,25 @@ AGREEABLENESS
 Charts
 -------------------------------
 ### Correlation chart
+```{r}
+p <- ggplot(data, aes(x = agreeableness_score, y = filtered_avg_popularity)) +
+  geom_point() +  
+  geom_smooth(method = "lm", color="#008020", se = TRUE) +  
+  labs(x = "Agreeableness Score", y = "Filtered Average Popularity", 
+       title = "Scatterplot of Agreeableness Score vs Filtered Average Popularity") +
+  theme_minimal()
+
+ggplotly(p)
+```
 
 ### Distribution
+```{r}
+p <- ggplot(data, aes(x = agreeableness_score)) +
+     geom_density(fill = "#008020", alpha = 0.5) +
+                 labs(title = "Density Plot of Agreeableness Score", x = "Extraversion Score", y = "Density") + xlim(0,10) + ylim(0, 0.5)
+
+ggplotly(p)
+```
 
 Description
 --------------------------------------
@@ -158,9 +222,25 @@ NEUROTICISM
 Charts
 -------------------------------
 ### Correlation chart
+```{r}
+p <- ggplot(data, aes(x = emotionalStability_score, y = filtered_avg_popularity)) +
+  geom_point() +  
+  geom_smooth(method = "lm", color="#008080", se = TRUE) +  
+  labs(x = "Emotional Stability Score", y = "Filtered Average Popularity", 
+       title = "Scatterplot of Emotional Stability Score vs Filtered Average Popularity") +
+  theme_minimal()
+
+ggplotly(p)
+```
 
 ### Distribution
+```{r}
+p <- ggplot(data, aes(x = emotionalStability_score)) +
+     geom_density(fill = "#A7EBA8", alpha = 0.5) +
+     labs(title = "Density Plot of Emotional Stability Score", x = "Emotional Stability Score", y = "Density") + xlim(0,10) + ylim(0, 0.5)
 
+ggplotly(p)
+```
 Description
 --------------------------------------
 ### description of the charts
