@@ -102,7 +102,7 @@ Methodology  {data-orientation=columns}
 Column
 -----------------------------------------------
 ###
-BIG METHODOLOGY CHART
+BIG METHODOLOGY GRAPHIC
 
 Column {data-width=300}
 -----------------------------------------------
@@ -119,13 +119,25 @@ We will be using Spotify, specifically the Spotify “On Repeat” Playlist data
 
 Our study hopes to ultimately culminate in a deeper understanding of how individual psychological characteristics influence music preferences and contribute to the ever evolving conversation regarding the relationship between music and personality
 
-### Tipi questions {data-height=300}
+### The 10 TiPi questions {data-height=300}
+I see myself as:
+
+1. _____ Extraverted, enthusiastic.
+2. _____ Critical, quarrelsome.
+3. _____ Dependable, self-disciplined.
+4. _____ Anxious, easily upset.
+5. _____ Open to new experiences, complex.
+6. _____ Reserved, quiet.
+7. _____ Sympathetic, warm.
+8. _____ Disorganized, careless.
+9. _____ Calm, emotionally stable.
+10. _____ Conventional, uncreative.
 
 Column {data-width=250}
 ----------------------------------------------
-### embedded spotify playlist
-<iframe style="border-radius:12px" src="https://open.spotify.com/embed/playlist/37i9dQZF1EpwjzNpkdLsU1?utm_source=generator&theme=0" width="100%" height="100%" frameBorder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe>
-
+### Example of an "On-repeat" playlist
+<iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1EpwjzNpkdLsU1?utm_source=generator" width="100%" height="100%" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+</iframe>
 Openness {data-navmenu="Results"}
 ==========================================
 OPENNESS
@@ -148,7 +160,7 @@ ggplotly(p)
 ```{r}
 p <- ggplot(data, aes(x = opennessToExperiences_score)) +
    geom_density(fill = "#EC9595", alpha = 0.5) +
-   labs(title = "Density Plot of Openness To Experiences Score", x = "Openness To Experiences Score", y = "Density") + xlim(0,10) + ylim(0, 0.5) + theme_minimal()
+   labs(title = "Density Plot of Openness Score", x = "Openness Score", y = "Density") + xlim(0,10) + ylim(0, 0.5) + theme_minimal()
 
 ggplotly(p)
 ```
@@ -323,10 +335,15 @@ Background {data-orientation=columns}
 
 Article reviews {.tabset .tabset-fade data-width=600}
 -------------------------------------
-### Music Recommender systems and popularity
-Music recommender systems are an integral part of modern-day music listening. They are adopted by streaming services such as Spotify and Apple Music and are part of their core feature set. These recommender systems, however, are not perfect. One of the issues described in “Support the underground: characteristics of beyond-mainstream music listeners” by Kowald et al. (2021) is the popularity bias these recommender systems have: popular songs are over-represented in recommendation lists. Furthermore, a study by Tintarev et al. (2013) found that openness to new music and the diversity of music within a group influences recommendation quality. The authors set to find out what the characteristics of beyond-mainstream music tracks and music listeners are, and how these characteristics correlate with openness and diversity patterns as well as with recommendation quality.
+### Musical Attribute Dimensions and Personality
+“The Song Is You: Preferences for Musical Attribute Dimensions Reflect Personality” by Greenberg, Kosinski, et al. unravels the complexities of the interplay between individuals’ personality traits and their preferences for musical attributes by asking if perceived attributes in music link to individual preferences and personality traits. The study, published 2016 in the Sage Journal on Social Psychology and Personality Science, defines personality using the Big Five Inventory (openness, conscientiousness, extraversion, agreeableness, and neuroticism), while musical attributes refer to the perceived psychological characteristics or features found within music such as arousal and valence.
 
-The authors of the article aimed to identify the characteristics of beyond-mainstream music tracks and listeners and how these characteristics influence recommendation quality in addition to openness and diversity patterns. The authors observed that beyond-mainstream music listeners receive worse recommendations, except for a certain subgroup with a high openness value. This subgroup received even better recommendations than mainstream music listeners.
+The impetus of this study being that although music and personality are often researched in relation to each other, previous research has been bound too closely to genre frameworks rather than specific attributes. That is to say that the researchers were attempting to build off past research on music and personality and improve upon it through the introduction of a supposedly novel approach.
+
+### Music Recommender systems and popularity
+Music recommender systems are an integral part of modern-day music listening. They are adopted by streaming services such as Spotify and Apple Music and are part of their core feature set. These recommender systems, however, are not perfect. One of the issues described in “Support the underground: characteristics of beyond-mainstream music listeners” by Kowald et al. (2021) is the popularity bias these recommender systems have: popular songs are over-represented in recommendation lists. Furthermore, a study by Tintarev et al. (2013) found that openness to new music and the diversity of music within a group influences recommendation quality. The aforementioned article set to find out what the characteristics of beyond-mainstream music tracks and music listeners are, and how these characteristics correlate with openness and diversity patterns as well as with recommendation quality.
+
+Summarizing the authors' findings, we observe that beyond-mainstream music listeners receive worse recommendations, except for a certain subgroup with a high openness value. This subgroup received even better recommendations than mainstream music listeners. Knowledge of these strengths and shortcomings can be used to improve upon the recommender systems currently in use
 
 ### Market concentration
 Over the last couple of decades, music consumption has shifted from purchasing individual records and listening to the radio to a single digital application that fits into your pocket. This era of digitalization is dominated by a fistful of firms and platforms, that manage to concentrate the market and therefore obtain massive potential leverage. Luis Aguiar and Joel Waldfogel (2021) aim to study the effect of such influence by digital companies by using the case of Spotify in their article Platforms, Power, and Promotion: Evidence from Spotify Playlists. The authors use Spotify as an example as it, combined with Apple Music, represents almost 55% of all global music streaming subscriptions. With such market concentration, the potential for antitrust problems arises. Therefore, the authors wish to quantify Spotify’s market power and evaluate if further scrutiny is needed when dealing with these platforms. They particularly focus on Spotify’s playlists, as the company manages 84.3% of the top 1000 playlists on the platform. Given that Spotify shares revenue with creators, list inclusion could present an avenue for favoritism. The fact that Spotify also cuts licensing deals with independent artists and directly competes with labels that rely on the platform presents a conflict of interest and exacerbates the potential for shady business practices. Therefore, an analysis of Spotify’s market power is conducted by comparing periods of song inclusion and removal from their playlists and the changes in daily listening numbers that ensue. They do this using both curated and algorithmic playlists and discontinuous daily listening numbers that Spotify publishes. Curated playlists are handpicked by experts at Spotify, while algorithmic playlists follow a simple rule for inclusion.
