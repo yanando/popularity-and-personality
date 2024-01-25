@@ -14,6 +14,8 @@ library(flexdashboard)
 library(fmsb)
 library(ggplot2)
 library(plotly)
+library(tidyr)
+library(dplyr)
 
 data <- read.csv("data_cleaned_with_average.csv", stringsAsFactors = FALSE)
 ```
@@ -74,7 +76,32 @@ final_data_vis <- data.frame(rbind(rep(1,5), rep(0,5), data_visualisation))
 ```
 <img src="assets/spider_chart.png"/>
 
-### Heatmap chart
+### Heatmap
+```{r}
+long_data <- data %>%
+     pivot_longer(cols = ends_with("_score"), 
+                names_to = "score_category", 
+                values_to = "score_value")
+
+get_avrg_by_trait_score <- function(trait, score) {
+  filtered <- df %>%
+      filter({{trait}} == score)
+    
+  return(mean(filtered$filtered_avg_popularity))
+}
+
+density_data <- long_data %>%
+  group_by(score_category, score_value) %>%
+  summarise(avgPop = mean(filtered_avg_popularity), .groups = 'drop') %>%
+  ungroup()
+
+p <- ggplot(density_data, aes(x = score_value, y = score_category, fill = avgPop)) +
+    geom_tile() +
+    scale_fill_gradient(low = "#EDF178", high = "#F24B4B") +
+    labs(title = "Average Popularity per trait score", x = "Score", y = "Score Category") +
+    theme_minimal()
+ggplotly(p)
+```
 
 Column {data-width=500}
 -----------------------------------------------------------------------
@@ -102,7 +129,7 @@ Methodology  {data-orientation=columns}
 Column
 -----------------------------------------------
 ###
-BIG METHODOLOGY GRAPHIC
+<img src="assets/methodology.jpg" />
 
 Column {data-width=300}
 -----------------------------------------------
@@ -136,7 +163,8 @@ I see myself as:
 Column {data-width=250}
 ----------------------------------------------
 ### Example of an "On-repeat" playlist
-<iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1EpwjzNpkdLsU1?utm_source=generator" width="100%" height="100%" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
+
+<iframe src="https://open.spotify.com/embed/playlist/37i9dQZF1EpwjzNpkdLsU1" width="100%" height="100%" frameborder="0" allowfullscreen="" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture">
 </iframe>
 Openness {data-navmenu="Results"}
 ==========================================
@@ -322,13 +350,8 @@ Evaluation/Reflection {data-orientation=columns}
 =======================================
 Conclusion
 ------------------------------------
-### Conclusion
-
-Strengths and Weaknesses
--------------------------------------
-### Strengths
-
-### Weaknesses
+###
+<img src="assets/evaluation.jpg" />
 
 Background {data-orientation=columns}
 =======================================
@@ -340,11 +363,6 @@ Article reviews {.tabset .tabset-fade data-width=600}
 
 The impetus of this study being that although music and personality are often researched in relation to each other, previous research has been bound too closely to genre frameworks rather than specific attributes. That is to say that the researchers were attempting to build off past research on music and personality and improve upon it through the introduction of a supposedly novel approach.
 
-### Music Recommender systems and popularity
-Music recommender systems are an integral part of modern-day music listening. They are adopted by streaming services such as Spotify and Apple Music and are part of their core feature set. These recommender systems, however, are not perfect. One of the issues described in “Support the underground: characteristics of beyond-mainstream music listeners” by Kowald et al. (2021) is the popularity bias these recommender systems have: popular songs are over-represented in recommendation lists. Furthermore, a study by Tintarev et al. (2013) found that openness to new music and the diversity of music within a group influences recommendation quality. The aforementioned article set to find out what the characteristics of beyond-mainstream music tracks and music listeners are, and how these characteristics correlate with openness and diversity patterns as well as with recommendation quality.
-
-Summarizing the authors' findings, we observe that beyond-mainstream music listeners receive worse recommendations, except for a certain subgroup with a high openness value. This subgroup received even better recommendations than mainstream music listeners. Knowledge of these strengths and shortcomings can be used to improve upon the recommender systems currently in use
-
 ### Market concentration
 Over the last couple of decades, music consumption has shifted from purchasing individual records and listening to the radio to a single digital application that fits into your pocket. This era of digitalization is dominated by a fistful of firms and platforms, that manage to concentrate the market and therefore obtain massive potential leverage. Luis Aguiar and Joel Waldfogel (2021) aim to study the effect of such influence by digital companies by using the case of Spotify in their article Platforms, Power, and Promotion: Evidence from Spotify Playlists. The authors use Spotify as an example as it, combined with Apple Music, represents almost 55% of all global music streaming subscriptions. With such market concentration, the potential for antitrust problems arises. Therefore, the authors wish to quantify Spotify’s market power and evaluate if further scrutiny is needed when dealing with these platforms. They particularly focus on Spotify’s playlists, as the company manages 84.3% of the top 1000 playlists on the platform. Given that Spotify shares revenue with creators, list inclusion could present an avenue for favoritism. The fact that Spotify also cuts licensing deals with independent artists and directly competes with labels that rely on the platform presents a conflict of interest and exacerbates the potential for shady business practices. Therefore, an analysis of Spotify’s market power is conducted by comparing periods of song inclusion and removal from their playlists and the changes in daily listening numbers that ensue. They do this using both curated and algorithmic playlists and discontinuous daily listening numbers that Spotify publishes. Curated playlists are handpicked by experts at Spotify, while algorithmic playlists follow a simple rule for inclusion.
 
@@ -355,6 +373,11 @@ A similar effect appeared with algorithmic playlists. The Global Top 50 playlist
 The authors also studied a special playlist called New Music Friday, as songs on there are released just days before their inclusion. Therefore, consistent pre-inclusion listening data is not available. They figured out that playlist rank is important, as songs in the first spot have an 85% chance of appearing on chart playlists. That percentage drops drastically until it is effectively irrelevant around rank 11-15. Using data from this playlist, they also discovered that effects from song inclusion in playlists persist for circa 1000 days.
 
 In the end, song inclusion in playlists has immense ramifications on streaming numbers and payouts. Spotify’s dominant position in the playlist selection therefore presents a problem for other market participants, which needs to be more heavily analyzed by antitrust authorities
+
+### Music Recommender systems and popularity
+Music recommender systems are an integral part of modern-day music listening. They are adopted by streaming services such as Spotify and Apple Music and are part of their core feature set. These recommender systems, however, are not perfect. One of the issues described in “Support the underground: characteristics of beyond-mainstream music listeners” by Kowald et al. (2021) is the popularity bias these recommender systems have: popular songs are over-represented in recommendation lists. Furthermore, a study by Tintarev et al. (2013) found that openness to new music and the diversity of music within a group influences recommendation quality. The aforementioned article set to find out what the characteristics of beyond-mainstream music tracks and music listeners are, and how these characteristics correlate with openness and diversity patterns as well as with recommendation quality.
+
+Summarizing the authors' findings, we observe that beyond-mainstream music listeners receive worse recommendations, except for a certain subgroup with a high openness value. This subgroup received even better recommendations than mainstream music listeners. Knowledge of these strengths and shortcomings can be used to improve upon the recommender systems currently in use
 
 References {data-width=400}
 ----------------------------------------------
