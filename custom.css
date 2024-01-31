@@ -1,0 +1,3 @@
+.bg-grey > :first-child {
+  background: rgb(233,233,233);
+}
